@@ -47,7 +47,7 @@ with tab1:
         st.dataframe(df[['Date', 'Price', 'Major_Event']].tail(10), use_container_width=True)
         col_a, col_b, col_c = st.columns(3)
         col_a.metric("Total Records", len(df))
-        col_b.metric("Date Range", "Jun 2000 to Jul 2025")
+        col_b.metric("Date Range", "2000 - 2025")
         col_c.metric("Max Price", f"${df['Price'].max():.2f}")
 
         with st.expander("Show Full Cleaned Dataset"):
