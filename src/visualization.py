@@ -89,19 +89,27 @@ class Visualizer:
         plt.close()
 
     def plot_event_volatility(self, df):
-        event_map = {
-            'COVID-19 Pandemic': 'COVID-19', '9/11 Terror Attacks': '9/11',
-            'Lehman Brothers Collapse': 'GFC', 'European Debt Crisis': 'EU Debt',
-            'Oil Price Crash': 'Oil Crash', 'Russia-Ukraine War': 'War', 'None': 'Normal'
+        event_windows = {
+            '9/11': ('2001-06-01', '2002-06-01'),
+            'GFC': ('2008-06-01', '2009-12-01'),
+            'EU Debt': ('2010-01-01', '2012-12-01'),
+            'COVID-19': ('2020-01-01', '2020-12-01'),
+            'Oil Crash': ('2014-06-01', '2015-12-01'),
+            'War': ('2022-01-01', '2023-01-01'),
         }
-        df['Event_Short'] = df['Major_Event'].map(event_map).fillna('Normal')
-        volatilities = df.groupby('Event_Short')['Price'].std().sort_values(ascending=False)
+        def classify_event(date):
+            for event, (s, e) in event_windows.items():
+                if pd.to_datetime(s) <= date <= pd.to_datetime(e):
+                    return event
+            return 'Normal'
+        df['Period'] = df['Date'].apply(classify_event)
+        volatilities = df.groupby('Period')['Price'].std().sort_values(ascending=False)
 
         fig, ax = plt.subplots(figsize=(8, 4))
-        colors = ['red', 'darkred', 'orange', 'purple', 'brown', 'blue', 'green']
+        colors = ['#2B579A', '#E81123', '#FF8C00', '#7B2D8E', '#107C10', '#00B7C3', '#FFB900']
         ax.bar(volatilities.index, volatilities.values, color=colors[:len(volatilities)])
-        ax.set_ylabel('Price Std Dev (Volatility)')
-        ax.set_title('Gold Price Volatility by Event Type')
+        ax.set_ylabel('Std Dev (USD/oz)')
+        ax.set_title('Gold Price Volatility by Event Period')
         plt.xticks(rotation=45)
         plt.tight_layout()
         plt.savefig(f'{self.output_dir}/event_volatility.png', dpi=150, bbox_inches='tight')

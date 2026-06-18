@@ -184,17 +184,25 @@ with tab4:
         st.pyplot(fig2)
 
         st.markdown("### Event Volatility")
-        fig3, ax3 = plt.subplots(figsize=(10, 4))
-        event_map = {
-            'COVID-19 Pandemic': 'COVID-19', '9/11 Terror Attacks': '9/11',
-            'Lehman Brothers Collapse': 'GFC', 'European Debt Crisis': 'EU Debt',
-            'Oil Price Crash': 'Oil Crash', 'Russia-Ukraine War': 'War', 'None': 'Normal'
+        event_windows = {
+            '9/11': ('2001-06-01', '2002-06-01'),
+            'GFC': ('2008-06-01', '2009-12-01'),
+            'EU Debt': ('2010-01-01', '2012-12-01'),
+            'COVID-19': ('2020-01-01', '2020-12-01'),
+            'Oil Crash': ('2014-06-01', '2015-12-01'),
+            'War': ('2022-01-01', '2023-01-01'),
         }
-        df['Event_Short'] = df['Major_Event'].map(event_map).fillna('Normal')
-        vols = df.groupby('Event_Short')['Price'].std().sort_values(ascending=False)
-        clrs = ['red', 'darkred', 'orange', 'purple', 'brown', 'blue', 'green']
+        def classify_event(date):
+            for event, (s, e) in event_windows.items():
+                if pd.to_datetime(s) <= date <= pd.to_datetime(e):
+                    return event
+            return 'Normal'
+        df['Period'] = df['Date'].apply(classify_event)
+        vols = df.groupby('Period')['Price'].std().sort_values(ascending=False)
+        fig3, ax3 = plt.subplots(figsize=(10, 4))
+        clrs = ['#2B579A', '#E81123', '#FF8C00', '#7B2D8E', '#107C10', '#00B7C3', '#FFB900']
         ax3.bar(vols.index, vols.values, color=clrs[:len(vols)])
-        ax3.set_ylabel('Std Dev (Volatility)')
-        ax3.set_title('Gold Price Volatility by Event Type')
+        ax3.set_ylabel('Std Dev (USD/oz)')
+        ax3.set_title('Gold Price Volatility by Event Period')
         plt.xticks(rotation=45)
         st.pyplot(fig3)
