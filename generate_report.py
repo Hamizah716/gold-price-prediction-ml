@@ -9,16 +9,17 @@ def build_content(pdf, is_dry_run=False):
     # ==================== CHAPTER 1 ====================
     pdf.add_page()
     if not is_dry_run:
+        pdf.ln(10)
         pdf.set_font('Helvetica', 'B', 16)
         pdf.cell(0, 10, 'CHAPTER 1', new_x="LMARGIN", new_y="NEXT", align='C')
-        pdf.ln(4)
+        pdf.ln(5)
         pdf.set_draw_color(0, 51, 102)
         pdf.set_line_width(0.5)
         pdf.line(60, pdf.get_y(), 150, pdf.get_y())
         pdf.ln(5)
         pdf.set_font('Helvetica', 'B', 14)
         pdf.cell(0, 9, 'INTRODUCTION', new_x="LMARGIN", new_y="NEXT", align='C')
-        pdf.ln(6)
+        pdf.ln(8)
 
         pdf.section_title('1.1 Introduction')
         pdf.body(
@@ -122,16 +123,17 @@ def build_content(pdf, is_dry_run=False):
     # ==================== CHAPTER 2 ====================
     pdf.add_page()
     if not is_dry_run:
+        pdf.ln(10)
         pdf.set_font('Helvetica', 'B', 16)
         pdf.cell(0, 10, 'CHAPTER 2', new_x="LMARGIN", new_y="NEXT", align='C')
-        pdf.ln(4)
+        pdf.ln(5)
         pdf.set_draw_color(0, 51, 102)
         pdf.set_line_width(0.5)
         pdf.line(60, pdf.get_y(), 150, pdf.get_y())
         pdf.ln(5)
         pdf.set_font('Helvetica', 'B', 14)
         pdf.cell(0, 9, 'LITERATURE REVIEW', new_x="LMARGIN", new_y="NEXT", align='C')
-        pdf.ln(6)
+        pdf.ln(8)
 
         pdf.section_title('2.1 Introduction')
         pdf.body(
@@ -237,16 +239,17 @@ def build_content(pdf, is_dry_run=False):
     # ==================== CHAPTER 3 ====================
     pdf.add_page()
     if not is_dry_run:
+        pdf.ln(10)
         pdf.set_font('Helvetica', 'B', 16)
         pdf.cell(0, 10, 'CHAPTER 3', new_x="LMARGIN", new_y="NEXT", align='C')
-        pdf.ln(4)
+        pdf.ln(5)
         pdf.set_draw_color(0, 51, 102)
         pdf.set_line_width(0.5)
         pdf.line(60, pdf.get_y(), 150, pdf.get_y())
         pdf.ln(5)
         pdf.set_font('Helvetica', 'B', 14)
         pdf.cell(0, 9, 'SYSTEM ANALYSIS AND DESIGN', new_x="LMARGIN", new_y="NEXT", align='C')
-        pdf.ln(6)
+        pdf.ln(8)
 
         pdf.section_title('3.1 Introduction')
         pdf.body(
@@ -335,16 +338,17 @@ def build_content(pdf, is_dry_run=False):
     # ==================== CHAPTER 4 ====================
     pdf.add_page()
     if not is_dry_run:
+        pdf.ln(10)
         pdf.set_font('Helvetica', 'B', 16)
         pdf.cell(0, 10, 'CHAPTER 4', new_x="LMARGIN", new_y="NEXT", align='C')
-        pdf.ln(4)
+        pdf.ln(5)
         pdf.set_draw_color(0, 51, 102)
         pdf.set_line_width(0.5)
         pdf.line(60, pdf.get_y(), 150, pdf.get_y())
         pdf.ln(5)
         pdf.set_font('Helvetica', 'B', 14)
         pdf.cell(0, 9, 'SYSTEM IMPLEMENTATION', new_x="LMARGIN", new_y="NEXT", align='C')
-        pdf.ln(6)
+        pdf.ln(8)
 
         pdf.section_title('4.1 Introduction')
         pdf.body(
@@ -448,16 +452,17 @@ def build_content(pdf, is_dry_run=False):
     # ==================== CHAPTER 5 ====================
     pdf.add_page()
     if not is_dry_run:
+        pdf.ln(10)
         pdf.set_font('Helvetica', 'B', 16)
         pdf.cell(0, 10, 'CHAPTER 5', new_x="LMARGIN", new_y="NEXT", align='C')
-        pdf.ln(4)
+        pdf.ln(5)
         pdf.set_draw_color(0, 51, 102)
         pdf.set_line_width(0.5)
         pdf.line(60, pdf.get_y(), 150, pdf.get_y())
         pdf.ln(5)
         pdf.set_font('Helvetica', 'B', 14)
         pdf.cell(0, 9, 'RESULTS AND DISCUSSION', new_x="LMARGIN", new_y="NEXT", align='C')
-        pdf.ln(6)
+        pdf.ln(8)
 
         pdf.section_title('5.1 Experimental Setup')
         for exp in [
@@ -562,16 +567,17 @@ def build_content(pdf, is_dry_run=False):
     # ==================== CHAPTER 6 ====================
     pdf.add_page()
     if not is_dry_run:
+        pdf.ln(10)
         pdf.set_font('Helvetica', 'B', 16)
         pdf.cell(0, 10, 'CHAPTER 6', new_x="LMARGIN", new_y="NEXT", align='C')
-        pdf.ln(4)
+        pdf.ln(5)
         pdf.set_draw_color(0, 51, 102)
         pdf.set_line_width(0.5)
         pdf.line(60, pdf.get_y(), 150, pdf.get_y())
         pdf.ln(5)
         pdf.set_font('Helvetica', 'B', 14)
         pdf.cell(0, 9, 'CONCLUSION AND FUTURE WORK', new_x="LMARGIN", new_y="NEXT", align='C')
-        pdf.ln(6)
+        pdf.ln(8)
 
         pdf.section_title('6.1 Conclusion')
         pdf.body(
@@ -604,16 +610,17 @@ def build_content(pdf, is_dry_run=False):
     # ==================== CHAPTER 7 ====================
     pdf.add_page()
     if not is_dry_run:
+        pdf.ln(10)
         pdf.set_font('Helvetica', 'B', 16)
         pdf.cell(0, 10, 'CHAPTER 7', new_x="LMARGIN", new_y="NEXT", align='C')
-        pdf.ln(4)
+        pdf.ln(5)
         pdf.set_draw_color(0, 51, 102)
         pdf.set_line_width(0.5)
         pdf.line(60, pdf.get_y(), 150, pdf.get_y())
         pdf.ln(5)
         pdf.set_font('Helvetica', 'B', 14)
         pdf.cell(0, 9, 'REFERENCES', new_x="LMARGIN", new_y="NEXT", align='C')
-        pdf.ln(6)
+        pdf.ln(8)
 
         refs = [
             'Hussain, M., & Rehman, S. (2019). Inflation, currency depreciation, and gold price interactions.',
@@ -657,16 +664,17 @@ def build_content(pdf, is_dry_run=False):
     # ==================== CHAPTER 8 ====================
     pdf.add_page()
     if not is_dry_run:
+        pdf.ln(10)
         pdf.set_font('Helvetica', 'B', 16)
         pdf.cell(0, 10, 'CHAPTER 8', new_x="LMARGIN", new_y="NEXT", align='C')
-        pdf.ln(4)
+        pdf.ln(5)
         pdf.set_draw_color(0, 51, 102)
         pdf.set_line_width(0.5)
         pdf.line(60, pdf.get_y(), 150, pdf.get_y())
         pdf.ln(5)
         pdf.set_font('Helvetica', 'B', 14)
         pdf.cell(0, 9, 'SOURCE CODE (APPENDIX)', new_x="LMARGIN", new_y="NEXT", align='C')
-        pdf.ln(6)
+        pdf.ln(8)
         pdf.body('This appendix contains the complete source code for all major modules.')
 
         source_files = [
@@ -723,16 +731,16 @@ class RealPDF(FPDF):
         self.set_font('Helvetica', '', 8)
         self.cell(0, 8, f'{self.page_no()}', align='C')
     def section_title(self, title):
-        self.ln(3)
+        self.ln(5)
         self.set_font('Helvetica', 'B', 12)
         self.set_text_color(0, 51, 102)
         self.cell(0, 7, title, new_x="LMARGIN", new_y="NEXT")
         self.set_text_color(0, 0, 0)
-        self.ln(2)
+        self.ln(3)
     def body(self, text):
         self.set_font('Helvetica', '', 11)
         self.multi_cell(0, 5.5, text)
-        self.ln(2)
+        self.ln(3)
     def bullet(self, text):
         self.set_font('Helvetica', '', 11)
         x = self.get_x()
@@ -880,10 +888,10 @@ pdf2.cell(0, 7, 'Roll No. DS24105', new_x="LMARGIN", new_y="NEXT")
 
 # ======== INDEX ========
 pdf2.add_page()
-pdf2.ln(5)
+pdf2.ln(12)
 pdf2.set_font('Helvetica', 'B', 16)
 pdf2.cell(0, 10, 'INDEX', new_x="LMARGIN", new_y="NEXT", align='C')
-pdf2.ln(8)
+pdf2.ln(6)
 pdf2.set_draw_color(0, 51, 102)
 pdf2.set_line_width(0.5)
 pdf2.line(60, pdf2.get_y(), 150, pdf2.get_y())
@@ -914,10 +922,10 @@ for title, pg in index_items:
 
 # ======== LIST OF TABLES & FIGURES ========
 pdf2.add_page()
-pdf2.ln(5)
+pdf2.ln(12)
 pdf2.set_font('Helvetica', 'B', 16)
 pdf2.cell(0, 10, 'List of Tables', new_x="LMARGIN", new_y="NEXT", align='C')
-pdf2.ln(8)
+pdf2.ln(6)
 pdf2.set_draw_color(0, 51, 102)
 pdf2.set_line_width(0.5)
 pdf2.line(60, pdf2.get_y(), 150, pdf2.get_y())
@@ -934,7 +942,7 @@ for ref, pg in [('Table 2.1: Literature Review Summary', str(ch2_start)),
 pdf2.ln(15)
 pdf2.set_font('Helvetica', 'B', 16)
 pdf2.cell(0, 10, 'List of Figures', new_x="LMARGIN", new_y="NEXT", align='C')
-pdf2.ln(8)
+pdf2.ln(6)
 pdf2.set_draw_color(0, 51, 102)
 pdf2.set_line_width(0.5)
 pdf2.line(60, pdf2.get_y(), 150, pdf2.get_y())
