@@ -49,6 +49,15 @@ with tab1:
         col_a.metric("Total Records", len(df))
         col_b.metric("Date Range", f"{df['Date'].min().date()} to {df['Date'].max().date()}")
         col_c.metric("Max Price", f"${df['Price'].max():.2f}")
+
+        with st.expander("Show Full Cleaned Dataset"):
+            st.dataframe(df, use_container_width=True)
+            st.download_button(
+                "Download Cleaned Data (CSV)",
+                df.to_csv(index=False).encode(),
+                file_name="gold_price_cleaned.csv",
+                mime="text/csv",
+            )
     with col2:
         st.subheader("Gold Price Trend")
         fig, ax = plt.subplots(figsize=(10, 4))
