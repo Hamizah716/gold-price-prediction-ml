@@ -1,0 +1,22 @@
+{
+  "Linear Regression": {
+    "RMSE": 73.99,
+    "MAE": 55.98,
+    "MAPE": 2.58
+  },
+  "Random Forest": {
+    "RMSE": 519.79,
+    "MAE": 307.98,
+    "MAPE": 11.67
+  },
+  "XGBoost": {
+    "RMSE": 541.14,
+    "MAE": 326.51,
+    "MAPE": 12.46
+  },
+  "Neural Network": {
+    "RMSE": 212.56,
+    "MAE": 148.52,
+    "MAPE": 6.1
+  }
+}
