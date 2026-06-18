@@ -758,16 +758,40 @@ class RealPDF(FPDF):
         self.multi_cell(0, 5.5, text)
         self.ln(1)
     def mono_table(self, rows, col_widths=None):
-        table_h = len(rows) * 4.5 + 3
+        table_h = len(rows) * 6 + 3
         self.check_space(table_h + 15)
-        self.set_font('Courier', '', 7.5)
-        for row in rows:
-            line = '|'
+        available = 190
+        if col_widths:
+            widths = col_widths
+        else:
+            n = len(rows[0])
+            widths = [available / n] * n
+
+        # Header row
+        self.set_font('Helvetica', 'B', 7.5)
+        self.set_fill_color(0, 51, 102)
+        self.set_text_color(255, 255, 255)
+        self.set_draw_color(0, 51, 102)
+        for i, cell in enumerate(rows[0]):
+            self.cell(widths[i], 6, f' {cell} ', border=1, align='C', fill=True)
+        self.ln()
+        self.set_text_color(0, 0, 0)
+        self.set_draw_color(80, 80, 80)
+
+        # Data rows
+        self.set_font('Helvetica', '', 7.5)
+        for row_idx, row in enumerate(rows[1:]):
+            if row_idx % 2 == 1:
+                self.set_fill_color(240, 245, 255)
+                fill = True
+            else:
+                fill = False
             for i, cell in enumerate(row):
-                w = col_widths[i] if col_widths else 40
-                line += f' {str(cell):<{w-2}}|'
-            self.cell(0, 4.5, line, new_x="LMARGIN", new_y="NEXT")
-        self.ln(3)
+                self.cell(widths[i], 5.5, f' {cell} ', border=1, align='C', fill=fill)
+            self.ln()
+
+        self.set_draw_color(0, 0, 0)
+        self.ln(4)
 
 pdf = RealPDF()
 pdf.set_auto_page_break(auto=True, margin=20)
@@ -840,28 +864,32 @@ pdf2.cell(0, 7, '2025-2026', new_x="LMARGIN", new_y="NEXT", align='C')
 
 # ======== CERTIFICATE ========
 pdf2.add_page()
-pdf2.ln(10)
+pdf2.ln(8)
+pdf2.set_font('Helvetica', 'B', 14)
+pdf2.cell(0, 8, 'University of Mumbai', new_x="LMARGIN", new_y="NEXT", align='C')
+pdf2.set_font('Helvetica', 'B', 11)
+pdf2.cell(0, 7, 'DEPARTMENT OF COMPUTER SCIENCE', new_x="LMARGIN", new_y="NEXT", align='C')
+pdf2.ln(5)
 pdf2.set_font('Helvetica', 'B', 16)
 pdf2.cell(0, 10, 'CERTIFICATE', new_x="LMARGIN", new_y="NEXT", align='C')
-pdf2.ln(10)
+pdf2.ln(8)
 pdf2.set_draw_color(0, 51, 102)
 pdf2.set_line_width(0.5)
 pdf2.line(60, pdf2.get_y(), 150, pdf2.get_y())
-pdf2.ln(10)
+pdf2.ln(8)
 pdf2.set_font('Helvetica', '', 12)
 pdf2.body(
     'This is to certify that the project entitled "Analyzing the Impact of Global Events on Gold Prices '
-    'Using Machine Learning Models" submitted by Hamizah Aziim Bhikan (Roll No. DS24105) studying at '
-    'Master of Science (M.Sc.) in Data Science as laid down by the University of Mumbai for the year 2025-2026, '
-    'is a bonafide work carried out by her under the guidance and supervision of the project guide.'
+    'Using Machine Learning Models" submitted by Ms. Hamizah Aziim Bhikan (Roll No. DS24105) studying at '
+    'Master of Science (M.Sc.) in Data Science as laid down by the University of Mumbai for the year 2025-2026.'
 )
 pdf2.ln(15)
 pdf2.cell(0, 7, 'Project Guide', new_x="LMARGIN", new_y="NEXT")
-pdf2.ln(15)
+pdf2.ln(20)
 pdf2.cell(0, 7, 'Head of Department', new_x="LMARGIN", new_y="NEXT")
-pdf2.ln(10)
-pdf2.cell(0, 7, 'Date: ________________', new_x="LMARGIN", new_y="NEXT")
-pdf2.cell(0, 7, 'Stamp: ________________', new_x="LMARGIN", new_y="NEXT")
+pdf2.ln(15)
+pdf2.cell(0, 7, 'Date: _________', new_x="LMARGIN", new_y="NEXT")
+pdf2.cell(0, 7, 'Stamp: _________', new_x="LMARGIN", new_y="NEXT")
 
 # ======== ACKNOWLEDGEMENT ========
 pdf2.add_page()
@@ -875,22 +903,25 @@ pdf2.line(60, pdf2.get_y(), 150, pdf2.get_y())
 pdf2.ln(10)
 pdf2.set_font('Helvetica', '', 12)
 pdf2.body(
-    'I would like to express my sincere gratitude to the Head of the Department of Computer Science '
+    'I would like to express my sincere gratitude to the Head of the Department of Computer Science, '
     'for providing the necessary facilities, encouragement, and support throughout the completion of this project.'
 )
 pdf2.body(
-    'I am deeply thankful to my project guide for her valuable guidance, continuous encouragement, '
-    'constructive suggestions, and constant support during every stage of this project. Her expertise, '
-    'patience, and dedication have played a significant role in the successful completion of this work.'
+    'I am deeply thankful to my project guide, for her valuable guidance, continuous encouragement, '
+    'constructive suggestions, and constant support during every stage of this project. Her expertise '
+    'and motivation played a significant role in the successful completion of this work.'
 )
 pdf2.body(
     'I would also like to extend my gratitude to all the faculty members and staff of the '
-    'Department of Computer Science for their cooperation, assistance, and valuable inputs.'
+    'Department of Computer Science for their cooperation, assistance, and valuable inputs '
+    'throughout the project period.'
 )
 pdf2.body(
     'Finally, I would like to thank my family and friends for their constant encouragement and moral support.'
 )
-pdf2.ln(20)
+pdf2.ln(10)
+pdf2.cell(0, 7, 'Place: Mumbai', new_x="LMARGIN", new_y="NEXT")
+pdf2.ln(10)
 pdf2.cell(0, 7, 'Yours Sincerely,', new_x="LMARGIN", new_y="NEXT")
 pdf2.ln(10)
 pdf2.set_font('Helvetica', 'B', 12)
