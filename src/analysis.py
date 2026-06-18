@@ -4,14 +4,30 @@ import numpy as np
 class EventAnalyzer:
     @staticmethod
     def get_event_stats(df):
-        event_map = {
-            'COVID-19 Pandemic': 'COVID-19', '9/11 Terror Attacks': '9/11',
-            'Lehman Brothers Collapse': 'GFC', 'European Debt Crisis': 'EU Debt',
-            'Oil Price Crash': 'Oil Crash', 'Russia-Ukraine War': 'War', 'None': 'Normal'
+        event_windows = {
+            '9/11': ('2001-06-01', '2002-06-01'),
+            'GFC': ('2008-06-01', '2009-12-01'),
+            'EU Debt': ('2010-01-01', '2012-12-01'),
+            'COVID-19': ('2020-01-01', '2020-12-01'),
+            'Oil Crash': ('2014-06-01', '2015-12-01'),
+            'War': ('2022-01-01', '2023-01-01'),
         }
-        df['Event_Short'] = df['Major_Event'].map(event_map).fillna('Normal')
-        stats = df.groupby('Event_Short')['Price'].agg(['mean', 'std', 'min', 'max', 'count'])
-        return stats.round(2)
+        def classify_event(date):
+            for event, (s, e) in event_windows.items():
+                if pd.to_datetime(s) <= date <= pd.to_datetime(e):
+                    return event
+            return 'Normal'
+        df['Period'] = df['Date'].apply(classify_event)
+        df['Monthly_Return'] = df['Price'].pct_change() * 100
+        stats = df.groupby('Period').agg(
+            mean=('Price', 'mean'),
+            std=('Price', 'std'),
+            min=('Price', 'min'),
+            max=('Price', 'max'),
+            count=('Price', 'count'),
+            volatility=('Monthly_Return', lambda x: x.std())
+        ).round(2)
+        return stats.sort_values('volatility', ascending=False)
 
     @staticmethod
     def get_top_features(feature_importances, feature_cols, top_n=10):

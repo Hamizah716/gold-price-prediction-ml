@@ -47,7 +47,7 @@ with tab1:
         st.dataframe(df[['Date', 'Price', 'Major_Event']].tail(10), use_container_width=True)
         col_a, col_b, col_c = st.columns(3)
         col_a.metric("Total Records", len(df))
-        col_b.metric("Date Range", f"{df['Date'].min().date()} to {df['Date'].max().date()}")
+        col_b.metric("Date Range", "Jun 2000 to Jul 2025")
         col_c.metric("Max Price", f"${df['Price'].max():.2f}")
 
         with st.expander("Show Full Cleaned Dataset"):
@@ -79,10 +79,11 @@ with tab2:
         st.table(perf_df)
         st.markdown("""
         **Key Insights:**
-        - **Neural Network** achieves lowest error (MAPE: {:.2f}%)
-        - Tree models struggle with extrapolation
+        - **Linear Regression** achieves lowest MAPE ({:.2f}%) — strong trend in test period favours linear extrapolation
+        - **Neural Network** is the best non-linear model (MAPE: {:.2f}%)
+        - Tree models struggle with extrapolation beyond training range
         - Event-aware features improve predictions
-        """.format(results['Neural Network']['MAPE']))
+        """.format(results['Linear Regression']['MAPE'], results['Neural Network']['MAPE']))
 
     with col2:
         selected = st.selectbox("Select Model", models_to_show)
@@ -198,11 +199,12 @@ with tab4:
                     return event
             return 'Normal'
         df['Period'] = df['Date'].apply(classify_event)
-        vols = df.groupby('Period')['Price'].std().sort_values(ascending=False)
+        df['Monthly_Return'] = df['Price'].pct_change() * 100
+        vols = df.groupby('Period')['Monthly_Return'].std().dropna().sort_values(ascending=False)
         fig3, ax3 = plt.subplots(figsize=(10, 4))
-        clrs = ['#2B579A', '#E81123', '#FF8C00', '#7B2D8E', '#107C10', '#00B7C3', '#FFB900']
+        clrs = ['#E81123', '#FF8C00', '#2B579A', '#7B2D8E', '#107C10', '#00B7C3', '#FFB900']
         ax3.bar(vols.index, vols.values, color=clrs[:len(vols)])
-        ax3.set_ylabel('Std Dev (USD/oz)')
+        ax3.set_ylabel('Monthly Return Std Dev (%)')
         ax3.set_title('Gold Price Volatility by Event Period')
         plt.xticks(rotation=45)
         st.pyplot(fig3)

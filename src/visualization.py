@@ -103,12 +103,13 @@ class Visualizer:
                     return event
             return 'Normal'
         df['Period'] = df['Date'].apply(classify_event)
-        volatilities = df.groupby('Period')['Price'].std().sort_values(ascending=False)
+        df['Monthly_Return'] = df['Price'].pct_change() * 100
+        volatilities = df.groupby('Period')['Monthly_Return'].std().dropna().sort_values(ascending=False)
 
         fig, ax = plt.subplots(figsize=(8, 4))
-        colors = ['#2B579A', '#E81123', '#FF8C00', '#7B2D8E', '#107C10', '#00B7C3', '#FFB900']
+        colors = ['#E81123', '#FF8C00', '#2B579A', '#7B2D8E', '#107C10', '#00B7C3', '#FFB900']
         ax.bar(volatilities.index, volatilities.values, color=colors[:len(volatilities)])
-        ax.set_ylabel('Std Dev (USD/oz)')
+        ax.set_ylabel('Monthly Return Std Dev (%)')
         ax.set_title('Gold Price Volatility by Event Period')
         plt.xticks(rotation=45)
         plt.tight_layout()
