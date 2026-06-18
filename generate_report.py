@@ -187,6 +187,7 @@ def build_content(pdf, is_dry_run=False):
             'suitable for time-series forecasting because they can capture long-term dependencies and complex temporal patterns.'
         )
 
+        pdf.check_space(80)
         pdf.section_title('2.5 Literature Review Summary')
         pdf.body('Table 2.1 summarizes the key studies reviewed in this chapter:')
         pdf.mono_table([
@@ -203,6 +204,7 @@ def build_content(pdf, is_dry_run=False):
             ['10', 'Wei & Huang', '2022', 'NLP-based event extraction for gold'],
         ], col_widths=[5, 30, 10, 55])
 
+        pdf.check_space(80)
         pdf.section_title('2.6 Comparative Analysis')
         pdf.body('Table 2.2 compares existing approaches versus the proposed system:')
         pdf.mono_table([
@@ -298,6 +300,7 @@ def build_content(pdf, is_dry_run=False):
         ]:
             pdf.bullet(step)
 
+        pdf.check_space(80)
         pdf.section_title('3.4 Technology Stack')
         pdf.body('Table 3.1 presents the technology stack used:')
         pdf.mono_table([
@@ -475,6 +478,7 @@ def build_content(pdf, is_dry_run=False):
         ]:
             pdf.bullet(exp)
 
+        pdf.check_space(80)
         pdf.section_title('5.2 Model Performance')
         pdf.body('Table 5.1 presents the performance comparison of all four models:')
         pdf.mono_table([
@@ -525,6 +529,7 @@ def build_content(pdf, is_dry_run=False):
             'Early stopping prevents overfitting while allowing sufficient training to capture meaningful patterns.'
         )
 
+        pdf.check_space(80)
         pdf.section_title('5.4 Event Impact Analysis')
         pdf.body('Table 5.2 shows gold price statistics grouped by event type:')
         pdf.mono_table([
@@ -730,7 +735,11 @@ class RealPDF(FPDF):
         self.set_y(-15)
         self.set_font('Helvetica', '', 8)
         self.cell(0, 8, f'{self.page_no()}', align='C')
+    def check_space(self, needed_mm=45):
+        if self.h - self.get_y() < needed_mm + self.b_margin:
+            self.add_page()
     def section_title(self, title):
+        self.check_space(35)
         self.ln(5)
         self.set_font('Helvetica', 'B', 12)
         self.set_text_color(0, 51, 102)
@@ -749,6 +758,8 @@ class RealPDF(FPDF):
         self.multi_cell(0, 5.5, text)
         self.ln(1)
     def mono_table(self, rows, col_widths=None):
+        table_h = len(rows) * 4.5 + 3
+        self.check_space(table_h + 15)
         self.set_font('Courier', '', 7.5)
         for row in rows:
             line = '|'
