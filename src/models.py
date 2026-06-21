@@ -72,7 +72,11 @@ class ModelTrainer:
             pred_s = model.predict(scaled)
         else:
             model, _, scaler, _ = self.trained_models[model_name]
-            inp = pd.DataFrame([input_dict])[feature_cols]
+            inp = pd.DataFrame([input_dict])
+            for c in feature_cols:
+                if c not in inp.columns:
+                    inp[c] = 0
+            inp = inp[feature_cols]
             scaled = scaler.transform(inp.values)
             pred_s = model.predict(scaled)
         return self.scaler_y.inverse_transform(pred_s.reshape(-1, 1))[0][0]

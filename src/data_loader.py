@@ -15,7 +15,7 @@ class DataLoader:
         df = df.sort_values('Date').reset_index(drop=True)
 
         for ec in sorted(df['Event_Label'].unique()):
-            if ec != 4:
+            if ec != 0:
                 df[f'Event_{int(ec)}'] = (df['Event_Label'] == ec).astype(int)
 
         self.event_dummies = [c for c in df.columns if c.startswith('Event_')]
@@ -47,20 +47,22 @@ class DataLoader:
 
     def get_event_map(self):
         return {
-            '9/11 Terror Attacks': '9/11 Attacks',
-            'Lehman Brothers Collapse': 'GFC',
+            'Dot-com Crash': 'Dot-com Crash',
+            '9/11 Attacks': '9/11 Attacks',
+            'Global Financial Crisis': 'GFC',
             'European Debt Crisis': 'EU Debt Crisis',
-            'COVID-19 Pandemic': 'COVID-19',
             'Oil Price Crash': 'Oil Crash',
+            'COVID-19 Pandemic': 'COVID-19',
             'Russia-Ukraine War': 'Rus-Ukr War'
         }
 
     def get_event_dates(self):
         return {
+            'Dot-com Crash': '2000-03-01',
             '9/11 Attacks': '2001-09-01',
             'GFC': '2008-09-01',
             'EU Debt Crisis': '2010-04-01',
-            'COVID-19': '2020-03-01',
-            'Oil Crash': '2014-12-01',
+            'Oil Crash': '2014-06-01',
+            'COVID-19': '2019-11-01',
             'Rus-Ukr War': '2022-02-01'
         }

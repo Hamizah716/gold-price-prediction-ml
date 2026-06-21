@@ -17,7 +17,8 @@ viz.plot_model_comparison(results, data_dict['y_test'], data_dict['test_dates'])
 
 event_colors = {
     '9/11 Attacks': 'red', 'GFC': 'darkred', 'EU Debt Crisis': 'purple',
-    'COVID-19': 'orange', 'Oil Crash': 'brown', 'Rus-Ukr War': 'magenta'
+    'COVID-19': 'orange', 'Oil Crash': 'brown', 'Rus-Ukr War': 'magenta',
+    'Dot-com Crash': 'darkblue'
 }
 viz.plot_gold_price_events(df, loader.get_event_dates(), event_colors)
 viz.plot_metrics_table(results)

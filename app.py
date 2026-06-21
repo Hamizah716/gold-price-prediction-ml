@@ -110,9 +110,12 @@ with tab3:
         lag1 = st.number_input("Price Lag 1 (prev month)", value=df['Price'].iloc[-1])
         lag2 = st.number_input("Price Lag 2", value=df['Price'].iloc[-2])
         lag3 = st.number_input("Price Lag 3", value=df['Price'].iloc[-3])
-        event_label = st.selectbox("Event Type", [4, 0, 1, 2, 3, 5, 6],
-                                   format_func=lambda x: {1: 'COVID-19', 3: 'GFC', 2: 'EU Debt',
-                                                          4: 'Normal', 5: 'Oil Crash', 0: '9/11', 6: 'War'}.get(x, 'Normal'))
+        event_label = st.selectbox("Event Type", [0, 1, 2, 3, 4, 5, 6, 7],
+                                   format_func=lambda x: {
+                                       0: 'Normal', 1: 'Dot-com Crash', 2: '9/11 Attacks',
+                                       3: 'GFC', 4: 'EU Debt Crisis', 5: 'Oil Crash',
+                                       6: 'COVID-19', 7: 'Russia-Ukraine War'
+                                   }.get(x, 'Normal'))
 
     with col2:
         st.markdown("### Predict Gold Price")
@@ -125,7 +128,7 @@ with tab3:
             'Price_Lag1': lag1, 'Price_Lag2': lag2, 'Price_Lag3': lag3,
         }
         for ec in sorted(df['Event_Label'].unique()):
-            if ec != 4:
+            if ec != 0:
                 input_dict[f'Event_{int(ec)}'] = 1 if event_label == ec else 0
 
         pred_price = trainer.predict(model_choice, input_dict, loader.feature_cols, loader.lr_features)
@@ -159,7 +162,8 @@ with tab4:
         st.markdown("### Gold Price Trend with Events")
         event_colors_viz = {
             '9/11 Attacks': 'red', 'GFC': 'darkred', 'EU Debt Crisis': 'purple',
-            'COVID-19': 'orange', 'Oil Crash': 'brown', 'Rus-Ukr War': 'magenta'
+            'COVID-19': 'orange', 'Oil Crash': 'brown', 'Rus-Ukr War': 'magenta',
+            'Dot-com Crash': 'darkblue'
         }
         viz = Visualizer()
         fig, ax = plt.subplots(figsize=(12, 5))
@@ -186,12 +190,13 @@ with tab4:
 
         st.markdown("### Event Volatility")
         event_windows = {
-            '9/11': ('2001-06-01', '2002-06-01'),
-            'GFC': ('2008-06-01', '2009-12-01'),
-            'EU Debt': ('2010-01-01', '2012-12-01'),
-            'COVID-19': ('2020-01-01', '2020-12-01'),
+            'Dot-com': ('2000-03-01', '2002-10-01'),
+            '9/11': ('2001-09-01', '2002-03-01'),
+            'GFC': ('2008-09-01', '2009-12-01'),
+            'EU Debt': ('2010-04-01', '2012-12-01'),
             'Oil Crash': ('2014-06-01', '2015-12-01'),
-            'War': ('2022-01-01', '2023-01-01'),
+            'COVID-19': ('2019-11-01', '2021-12-01'),
+            'War': ('2022-02-01', '2025-07-01'),
         }
         def classify_event(date):
             for event, (s, e) in event_windows.items():

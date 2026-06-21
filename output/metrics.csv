@@ -1,5 +1,5 @@
 Model,RMSE,MAE,MAPE
-Linear Regression,73.99,55.98,2.58%
-Random Forest,519.79,307.98,11.67%
-XGBoost,541.14,326.51,12.46%
-Neural Network,212.56,148.52,6.1%
+Linear Regression,92.97,68.85,3.03%
+Random Forest,522.57,311.3,11.81%
+XGBoost,546.27,329.29,12.55%
+Neural Network,323.57,207.73,8.24%
